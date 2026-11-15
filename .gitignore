@@ -16,6 +16,7 @@ dist-ssr
 # Environment & Sensitive Files
 .env
 .env.*
+!.env.example
 *.env
 *.pem
 *.key
@@ -32,3 +33,13 @@ token.json
 *.njsproj
 *.sln
 *.sw?
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+venv/
+.venv/
+

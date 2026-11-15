@@ -10,7 +10,9 @@ import {
   Copy, 
   Check,
   ShieldCheck,
-  Code2
+  Code2,
+  Cpu,
+  Award
 } from 'lucide-react';
 
 export default function PipelineTab() {
@@ -54,6 +56,13 @@ jobs['posting_weekday'] = jobs['posted_date'].dt.day_name()`;
     { name: "posting_weekday", type: "object", role: "Engineered Feature", desc: "Day of week (Monday–Sunday) extracted from UTC timestamp" },
   ];
 
+  const modelBenchmark = [
+    { model: "HistGradientBoosting", r2: "0.3454", mae: "$30,482", rmse: "$41,039", status: "Selected (Deployed)", best: true },
+    { model: "Gradient Boosting", r2: "0.3446", mae: "$30,508", rmse: "$41,062", status: "Evaluated", best: false },
+    { model: "Random Forest Regressor", r2: "0.3401", mae: "$30,557", rmse: "$41,204", status: "Evaluated", best: false },
+    { model: "Ridge Regression", r2: "0.3202", mae: "$31,411", rmse: "$41,821", status: "Baseline", best: false }
+  ];
+
   return (
     <div className="space-y-6">
       
@@ -63,21 +72,21 @@ jobs['posting_weekday'] = jobs['posted_date'].dt.day_name()`;
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-stone-600 dark:text-stone-300">
               <Database className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Data Engineering &amp; ETL Audit</span>
+              <span>Data Engineering &amp; ML Architecture</span>
             </div>
             <h1 className="mt-1 text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-100 sm:text-3xl">
-              Preprocessing &amp; Transformation Pipeline
+              Preprocessing, Modeling &amp; Deployment Pipeline
             </h1>
             <p className="mt-1 text-sm text-stone-600 dark:text-stone-400 max-w-2xl">
-              Verification of all data cleaning, schema validation, and feature engineering steps 
-              executed in Phase 1 &amp; Phase 2 inside Google Colab.
+              Verification of data cleaning, schema validation, feature engineering, and the 
+              production Machine Learning regression benchmark trained on 28,189 records.
             </p>
           </div>
 
           <div className="flex items-center gap-2 text-xs font-mono">
             <span className="rounded-lg bg-emerald-50 px-3 py-1.5 font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>Phase 1 &amp; 2 Verified</span>
+              <span>Phases 1, 2 &amp; 3 Production Ready</span>
             </span>
           </div>
         </div>
@@ -120,6 +129,68 @@ jobs['posting_weekday'] = jobs['posted_date'].dt.day_name()`;
         </div>
       </div>
 
+      {/* Model Benchmark Card */}
+      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-2xs dark:border-stone-800 dark:bg-stone-900">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-stone-100 dark:border-stone-800 gap-2">
+          <div>
+            <div className="flex items-center gap-2">
+              <Cpu className="h-4 w-4 text-indigo-600" />
+              <h2 className="text-base font-semibold text-stone-900 dark:text-stone-100">
+                Phase 3 Machine Learning Regression Benchmark
+              </h2>
+            </div>
+            <p className="text-xs text-stone-500 dark:text-stone-400">
+              Evaluated on 7,048 unseen test observations (80/20 train-test holdout split)
+            </p>
+          </div>
+          <span className="rounded bg-indigo-50 px-2.5 py-1 text-xs font-mono text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+            Pipeline: Scikit-learn + Joblib
+          </span>
+        </div>
+
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="text-[11px] text-stone-400 border-b border-stone-100 dark:border-stone-800">
+              <tr>
+                <th className="py-2.5 px-3 font-medium">Model Architecture</th>
+                <th className="py-2.5 px-3 font-medium">Test Set R²</th>
+                <th className="py-2.5 px-3 font-medium">Mean Absolute Error (MAE)</th>
+                <th className="py-2.5 px-3 font-medium">Root Mean Squared Error (RMSE)</th>
+                <th className="py-2.5 px-3 font-medium text-right">Production Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-100 dark:divide-stone-800 font-mono text-[11px]">
+              {modelBenchmark.map((m) => (
+                <tr key={m.model} className={m.best ? "bg-emerald-50/40 dark:bg-emerald-950/20 font-semibold" : ""}>
+                  <td className="py-3 px-3 text-stone-900 dark:text-stone-100 font-sans flex items-center gap-2">
+                    {m.best && <Award className="h-3.5 w-3.5 text-emerald-600 shrink-0" />}
+                    <span>{m.model}</span>
+                  </td>
+                  <td className="py-3 px-3 text-emerald-600 dark:text-emerald-400">
+                    {m.r2}
+                  </td>
+                  <td className="py-3 px-3 text-stone-800 dark:text-stone-200">
+                    {m.mae}
+                  </td>
+                  <td className="py-3 px-3 text-stone-600 dark:text-stone-400">
+                    {m.rmse}
+                  </td>
+                  <td className="py-3 px-3 text-right">
+                    <span className={`rounded px-2 py-0.5 text-[10px] font-sans ${
+                      m.best
+                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 font-medium"
+                        : "bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-400"
+                    }`}>
+                      {m.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* Code Snippet & Feature Dictionary Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
@@ -131,7 +202,7 @@ jobs['posting_weekday'] = jobs['posted_date'].dt.day_name()`;
                 Cleaned Data Dictionary
               </h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">
-                Key features exported to <code className="font-mono text-[10px]">cleaned_jobs.csv</code>
+                Features exported to <code className="font-mono text-[10px]">cleaned_jobs.csv</code>
               </p>
             </div>
             <span className="font-mono text-xs text-stone-500">
@@ -202,8 +273,8 @@ jobs['posting_weekday'] = jobs['posted_date'].dt.day_name()`;
           </div>
 
           <div className="mt-4 pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs text-stone-500">
-            <span>Cleaned output saved:</span>
-            <code className="font-mono text-stone-800 dark:text-stone-200">/content/cleaned_jobs.csv</code>
+            <span>Trained ML Pipeline:</span>
+            <code className="font-mono text-stone-800 dark:text-stone-200">backend/app/models/salary_model.joblib</code>
           </div>
         </div>
 

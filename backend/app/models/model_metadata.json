@@ -1,0 +1,81 @@
+{
+  "model_name": "HistGradientBoosting",
+  "target": "normalized_salary",
+  "currency": "USD",
+  "total_training_records": 28189,
+  "total_test_records": 7048,
+  "features": [
+    "role_category",
+    "formatted_experience_level",
+    "formatted_work_type",
+    "location_tier",
+    "remote_allowed"
+  ],
+  "categories": {
+    "role_category": [
+      "Operations",
+      "Healthcare",
+      "Management",
+      "Retail",
+      "Technology",
+      "General Professional",
+      "Sales",
+      "Finance"
+    ],
+    "formatted_experience_level": [
+      "Not Specified",
+      "Mid-Senior level",
+      "Associate",
+      "Entry level",
+      "Director",
+      "Internship",
+      "Executive"
+    ],
+    "formatted_work_type": [
+      "Full-time",
+      "Internship",
+      "Contract",
+      "Part-time",
+      "Temporary",
+      "Other",
+      "Volunteer"
+    ],
+    "location_tier": [
+      "Tier 2 (Austin, Chicago, Denver, Atlanta)",
+      "Tier 1 (NYC, SF, Seattle, Boston)",
+      "Tier 3 (Regional / Secondary)"
+    ],
+    "remote_allowed": [
+      "0",
+      "1"
+    ]
+  },
+  "metrics": {
+    "MAE": 30481.97,
+    "RMSE": 41039.06,
+    "R2": 0.3454
+  },
+  "comparison": {
+    "Ridge Regression": {
+      "MAE": 31410.915,
+      "RMSE": 41820.9078,
+      "R2": 0.3202
+    },
+    "HistGradientBoosting": {
+      "MAE": 30481.9704,
+      "RMSE": 41039.0639,
+      "R2": 0.3454
+    },
+    "Random Forest": {
+      "MAE": 30556.5687,
+      "RMSE": 41203.5794,
+      "R2": 0.3401
+    },
+    "Gradient Boosting": {
+      "MAE": 30508.47,
+      "RMSE": 41061.9918,
+      "R2": 0.3446
+    }
+  },
+  "trained_date": "2026-11-15T15:41:50.943759"
+}
